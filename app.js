@@ -34,7 +34,7 @@ app.get('/add-blog', (req, res) => {
     snippet: 'about my new blog',
     body: 'more about my new blog',
   });
-  save();
+  blog.save();
   then(result => {
     res.send(result);
   });

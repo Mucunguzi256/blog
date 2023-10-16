@@ -2,8 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const Blog = require('./models/Blog');
-const lodash = require('lodash');
-const router = express.Router();
 
 const app = express();
 // DB connection(mangoDB)

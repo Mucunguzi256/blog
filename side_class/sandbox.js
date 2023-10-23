@@ -8,3 +8,5 @@ while (i < animals.length) {
   console.log(animals[1]);
   i++;
 }
+
+// logical operators OR || & AND &&

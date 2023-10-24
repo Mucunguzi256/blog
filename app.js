@@ -5,10 +5,10 @@ const Blog = require('./models/Blog');
 
 const app = express();
 // DB connection(mangoDB)
-const dburi = 'mongodb+srv://test123:test123@blog0.pgjd2eb.mongodb.node-class1/?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://test123:test123@blog0.pgjd2eb.mongodb.node-class1/?retryWrites=true&w=majority';
 async function connect() {
   try {
-    await mongoose.connect('dburi');
+    await mongoose.connect('dbURI');
   } catch (err) {
     console.log(err);
   }
@@ -24,32 +24,43 @@ app.listen(3000);
 
 // middleware and static files
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
-//db at play
-app.get('/add-blog', (req, res) => {
-  const blog = new Blog({
-    title: 'new blog',
-    snippet: 'about my new blog',
-    body: 'more about my new blog',
-  });
-  blog.save();
-  then(result => {
-    res.send(result);
-  });
-  blog.catch(err => {
-    console.log(err);
-  });
-});
-
+//Routs
 app.get('/', (req, res) => {
-	//res.send('<p> Home Page </p>');
-	res.render('index', { title: 'Home' });
+  res.redirect('/blogs');
+  //res.send('<p> Home Page </p>');
+  //res.render('index', { title: 'Home' });
 });
 
 app.get('/about', (req, res) => {
-	//res.send('<p> Home Page </p>');
-	res.render('about', { title: 'About' });
+  //res.send('<p> Home Page </p>');
+  res.render('about', { title: 'About' });
+});
+
+//Blog rout
+app.get('/blogs', (req, res) => {
+  Blog.find()
+    .sort({ createdAt: -1 })
+    .then(result => {
+      res.render('index', { title: 'All Blogs', Blogs: result });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+app.post('/blogs', (req, res) => {
+  const blog = new Blog(req.body);
+  blog
+    .save()
+    .then(result => {
+      res.redirect('/blogs');
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 app.get('/blogs/create', (req, res) => {

@@ -5,18 +5,19 @@ const Blog = require('./models/Blog');
 
 const app = express();
 // DB connection(mangoDB)
-const dbURI = 'mongodb+srv://test123:test123@blog0.pgjd2eb.mongodb.node-class1/?retryWrites=true&w=majority';
+const dburi = 'mongodb+srv://test123:test123@blog0.pgjd2eb.mongodb.node-class1/?retryWrites=true&w=majority';
 async function connect() {
   try {
-    await mongoose.connect('dbURI');
+    await mongoose.connect('dburi');
   } catch (err) {
     console.log(err);
   }
 }
 connect();
-//mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
-//app().then((result) => console.log('connected to db'));
-//app().catch((err) => console.log(err));
+/*mongoose.connect(dburi, { useNewUrlParser: true, useUnifiedTopology: true });
+.then(result => app.listen(3000));
+.catch(err => console.log(err));*/
+
 //view engine
 app.set('view engine', 'ejs');
 app.listen(3000);
